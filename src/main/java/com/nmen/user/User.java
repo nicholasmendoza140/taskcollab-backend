@@ -1,6 +1,10 @@
 package com.nmen.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -17,6 +25,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
+
+    private String firstName;
+
+    private String lastName;
+
     private String email;
 
     private String password;
@@ -24,15 +37,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User() {
-    }
-
-    public User(Integer id, String email, String password, Role role) {
-        this.id = id;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-    }
 
     @Override
     public boolean equals(Object o) {
