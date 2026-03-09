@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.security.Security;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +59,20 @@ public class TeamService {
         teamMembershipRepository.save(teamMembership);
         return teamMembership;
 
+    }
+
+    public List<Team> getTeams() {
+        var email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        var user = userRepository.findByEmail(email)
+                .orElseThrow();
+        List<TeamMembership> memberships = teamMembershipRepository.findTeamMembershipByUser(user);
+        List<Team> teams = new ArrayList<>();
+        for (TeamMembership membership : memberships) {
+            teams.add(membership.getTeam());
+        }
+        return teams;
     }
 }

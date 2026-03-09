@@ -5,8 +5,10 @@ import com.nmen.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @Builder
 @Entity
 @AllArgsConstructor
