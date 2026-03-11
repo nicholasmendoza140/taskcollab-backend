@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -24,5 +25,10 @@ public class ProjectController {
     @GetMapping("/teams/{teamId}/projects")
     public ResponseEntity<List<Project>> getProjects(@PathVariable Integer teamId) {
         return ResponseEntity.ok(projectService.getProjects(teamId));
+    }
+
+    @GetMapping("/projects/{projectId}")
+    public ResponseEntity<Project> getProject(@PathVariable Integer projectId) {
+        return ResponseEntity.ok(projectService.getProject(projectId));
     }
 }
