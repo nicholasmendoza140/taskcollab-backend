@@ -31,4 +31,9 @@ public class TaskController {
     public ResponseEntity<Task> getTask(@PathVariable Integer taskId) {
         return ResponseEntity.ok(taskService.getTask(taskId));
     }
+
+    @PatchMapping("/tasks/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable Integer taskId, UpdateTaskRequest request) {
+        return ResponseEntity.ok(taskService.updateTask(taskId, request));
+    }
 }
