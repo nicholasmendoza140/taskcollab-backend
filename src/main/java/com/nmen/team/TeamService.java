@@ -1,9 +1,12 @@
 package com.nmen.team;
 
 import com.nmen.auth.AuthenticationService;
+import com.nmen.config.TeamSecurity;
+import com.nmen.task.Task;
 import com.nmen.user.Role;
 import com.nmen.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamService {
     private final TeamRepository teamRepository;
+    private final TeamSecurity teamSecurity;
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final TeamMembershipRepository teamMembershipRepository;
@@ -62,6 +66,7 @@ public class TeamService {
     }
 
     public List<Team> getTeams() {
+        System.out.println("getTeams hit");
         var email = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -74,5 +79,11 @@ public class TeamService {
             teams.add(membership.getTeam());
         }
         return teams;
+    }
+
+    public Team getTeam(Integer teamId) {
+        System.out.println("getTeam hit");
+        return teamRepository.findById(teamId)
+                .orElseThrow();
     }
 }

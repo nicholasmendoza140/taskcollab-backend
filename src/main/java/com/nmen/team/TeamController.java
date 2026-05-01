@@ -1,5 +1,6 @@
 package com.nmen.team;
 
+import com.nmen.task.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/teams")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class TeamController {
 
@@ -21,12 +22,17 @@ public class TeamController {
     }
 
     @PreAuthorize("@teamSecurity.isTeamMember(#teamId, principal.id)")
-    @PostMapping("/{teamId}/members")
+    @PostMapping("/teams/{teamId}/members")
     public ResponseEntity<TeamMembership> addMember(@PathVariable Integer teamId, @RequestBody AddMemberRequest request) {
         return ResponseEntity.ok(teamService.addMember(request, teamId));
     }
 
-    @GetMapping
+    @GetMapping("/teams/{teamId}")
+    public ResponseEntity<Team> getTeam(@PathVariable Integer teamId) {
+        return ResponseEntity.ok(teamService.getTeam(teamId));
+    }
+
+    @GetMapping("/teams")
     public ResponseEntity<List<Team>> getTeams() {
         return ResponseEntity.ok(teamService.getTeams());
     }
