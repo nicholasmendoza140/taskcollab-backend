@@ -29,10 +29,12 @@ public class TaskService {
                 .orElseThrow();
         var project = projectRepository.findById(projectId)
                 .orElseThrow();
+        var assignee = userRepository.findById(request.getAssigneeId())
+                .orElseThrow();
         var task = Task.builder()
                 .name(request.getName())
                 .description(request.getDescription())
-                .assignee(request.getAssignee())
+                .assignee(assignee)
                 .status(TaskStatus.TODO)
                 .project(project)
                 .createdBy(user)
@@ -87,8 +89,10 @@ public class TaskService {
             task.setStatus(request.getStatus());
         }
 
-        if (request.getAssignee() != null) {
-            task.setAssignee(request.getAssignee());
+        if (request.getAssigneeId() != null) {
+            var assignee = userRepository.findById(request.getAssigneeId())
+                    .orElseThrow();
+            task.setAssignee(assignee);
         }
 
         return taskRepository.save(task);

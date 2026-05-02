@@ -15,5 +15,5 @@ public class CreateTaskRequest {
 
     private String description;
 
-    private User assignee;
+    private Integer assigneeId;
 }

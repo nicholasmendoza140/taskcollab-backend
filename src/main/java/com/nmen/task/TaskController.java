@@ -17,7 +17,7 @@ public class TaskController {
 
     @PreAuthorize("@teamSecurity.isTeamMemberByProject(#projectId, principal.id)")
     @PostMapping("/projects/{projectId}/tasks")
-    public ResponseEntity<Task> createTask(@PathVariable Integer projectId, CreateTaskRequest request) {
+    public ResponseEntity<Task> createTask(@PathVariable Integer projectId, @RequestBody CreateTaskRequest request) {
         return ResponseEntity.ok(taskService.createTask(request, projectId));
     }
 

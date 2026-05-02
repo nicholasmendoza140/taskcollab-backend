@@ -21,5 +21,5 @@ public class UpdateTaskRequest {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    private User assignee;
+    private Integer assigneeId;
 }
